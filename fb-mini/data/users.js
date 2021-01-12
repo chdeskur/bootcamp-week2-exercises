@@ -3,8 +3,13 @@ const casual = require('casual')
 casual.define('user', () => ({
   id: casual.uuid,
   email: casual.email,
-  created_at: casual.moment,
-  updated_at: casual.moment,
+  username: casual.username,
+  password: casual.password,
+  name: casual.name,
+  bio: casual.string,
+  numFollowers: casual.integer(from = 0, to = 1000), 
+  numPosts: casual.integer(from = 0, to = 1000), 
+  age: casual.date("MM-DD-YYYY")  
 }))
 
 
