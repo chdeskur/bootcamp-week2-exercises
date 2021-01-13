@@ -1,4 +1,6 @@
 const cleanup = require('../lib/cleanup')
+const User = require('../models/User')
+const casual = require('casual')
 // Import models
 
 const run = async () => {
@@ -13,6 +15,20 @@ const run = async () => {
   // https://vincit.github.io/objection.js/api/model/instance-methods.html#fetchgraph
 
   // -----
+  const cath = await User.query().findOne({ firstName: 'Cath' })
+  await cath.$relatedQuery('pet').insert({
+    id: casual.uuid, 
+    ownerId: cath.id,
+    type: 'DOG',
+    name: casual.first_name, 
+    created_at: casual.moment,
+    updated_at: casual.moment
+  })
+
+  const update = await cath.$fetchGraph('[pet,children]')
+  console.log(update)
+
+
   cleanup()
 }
 
